@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+project]
+name = "congrad"
+version = "0.0.1"
+authors = [
+  { name="P. Michael Kielstra", email="pmkielstra@math.berkeley.edu" },
+]
+description = "Generic conjugate gradient solver that works with your favorite backend"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/PMKielstra/PyConGrad"
+Issues = "https://github.com/PMKielstra/PyConGrad/issues"
+
+dependencies = ["tqdm"]
+
+[project.optional-dependencies]
+torch = ["torch"]
+numpy = ["numpy"]
+cupy = ["cupy"]
