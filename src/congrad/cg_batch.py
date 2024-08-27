@@ -13,24 +13,32 @@ class cg_batch_generic:
 
         This function makes no assumptions about its inputs except that vectors work as expected with addition, subtraction, pointwise multiplication and division, and backend functions.
         
-        Arguments:
-         - A: A function that represents batched matvecs by A
-         - b: A batched vector
-         - P: A function that represents matvecs by a preconditioner (default: None)
-         - x0: A batched vector (default: None)
-         - rtol: Stop when the residual norm is < rtol * |b| (default: 1e-3)
-         - atol: Stop when the residual norm is < atol (default: 0)
-         - maxiter: Stop after this many iterations, or None to converge no matter how long it takes (default: 1000)
-         - warn_unconverged: Raise a warning if iteration is stopped before convergence (default: True)
-         - monitor: None or False to not use a monitor, True to use the default monitor (which prints a convergence message every twenty iterations), or a monitor instance (default: None).
-         - flexible: Use "flexible CG" (Polak-Ribère rather than the Fletcher-Reeves) -- if you don't know what this is then you don't need it (default: False)
-
-        Returns:
-         - x: The batched solution
-         - info: A dict containing:
-           - niter: The number of iterations (calls to A_bmm) required
-           - converged: Whether or not the solution has converged
-           - residual: The norm of each residual as computed by the CG algorithm
+        :param A: A function that represents batched matvecs by A
+        :type A: function
+        :param b: A batched vector
+        :type b: vector
+        :param P: A function that represents matvecs by a preconditioner (default: None)
+        :type P: function, optional
+        :param x0: A batched vector (default: None)
+        :type x0: vector, optional
+        :param rtol: Stop when the residual norm is < rtol * |b| (default: 1e-3)
+        :type rtol: float, optional
+        :param atol: Stop when the residual norm is < atol (default: 0)
+        :type atol: float, optional
+        :param maxiter: Stop after this many iterations, or None to converge no matter how long it takes (default: 1000)
+        :type maxiter: int, optional
+        :param warn_unconverged: Raise a warning if iteration is stopped before convergence (default: True)
+        :type warn_unconverged: bool, optional
+        :param monitor: None or False to not use a monitor, True to use the default monitor (which prints a convergence message every twenty iterations), or a monitor instance (default: None).
+        :type monitor: Monitor, optional
+        :param flexible: Use "flexible CG" (Polak-Ribère rather than Fletcher-Reeves) -- if you don't know what this is then you don't need it (default: False)
+        :type flexible: bool, optional
+        
+        :return: A tuple x, info where x is the (batched) solution and info is a dict containing:
+           - niter: The number of iterations (calls to A_bmm) required.
+           - converged: Whether or not the solution has converged.
+           - residual: The norm of each residual as computed by the CG algorithm.
+        :rtype: tuple
         """
 
         if P is None:

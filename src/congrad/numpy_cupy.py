@@ -8,8 +8,11 @@ def make_backend(np):
             return np.linalg.norm(X, axis=-1)
         
         def dot(X, Y):
-            return np.squeeze(np.matmul(X[:, None, :], Y[:, :, None]), axis=-1)
-    
+            XX = np.expand_dims(X, -2)
+            YY = np.expand_dims(Y, -1)
+            dot_prod = np.matmul(XX, YY)
+            return np.squeeze(dot_prod, axis=-1)
+                
         def all_true(X):
             return X.all()
     

@@ -1,28 +1,29 @@
-from abc import ABC, abstractmethod
 from time import time
 
 from tqdm import tqdm
 
-class Monitor(ABC):
+class Monitor:
 
-    @abstractmethod
     def setup(self, stop_at, maxiter):
         """Called once, just before the solve begins.
-        
-        Arguments:
-         - stop_at: The maximum absolute error (possibly with relative tolerance for this particular problem baked in) allowed in the solution. 
-         - maxiter: The maximum number of iterations."""
+
+        :param stop_at: The maximum absolute error (possibly with relative tolerance for this particular problem baked in) allowed in the solution.
+        :type stop_at: vector
+        :param maxiter: The maximum number of iterations (can be None).
+        :type maxiter: int"""
         pass
 
-    @abstractmethod
     def step(self, iteration, res_norm, x, is_end):
         """Called after every iterative step.
 
-        Arguments:
-        - iteration: The number of (batched) matvecs so far.
-        - res_norm: The residual norm, in the format used by the backend.
-        - x: The candidate solution, in the format used by the backend.
-        - is_end: True if this value of x is about to be returned.
+        :param iteration: The number of (batched) matvecs so far.
+        :type iteration: int
+        :param res_norm: The residual norm, in the format used by the backend.
+        :type res_norm: vector
+        :param x: The candidate solution, in the format used by the backend.
+        :type x: vector
+        :param is_end: True if this value of x is about to be returned.
+        :type is_end: bool
         """
         pass
 
@@ -42,7 +43,7 @@ class DefaultMonitor(Monitor):
             print(f"{iteration:03d}: {res_norm:.5e} ({time() - self.start_time:.5e} seconds)")
 
 class ProgressBarMonitor(Monitor):
-    """A monitor that displays a simple progress bar.  Powered by tqdm."""
+    """A monitor that displays a simple progress bar.  Powered by tqdm <https://tqdm.github.io/>."""
     def setup(self, stop_at, maxiter):
         self.pbar = tqdm(total=maxiter)
 
