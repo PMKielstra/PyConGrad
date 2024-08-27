@@ -17,13 +17,13 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[project.urls]
-Homepage = "https://github.com/PMKielstra/PyConGrad"
-Issues = "https://github.com/PMKielstra/PyConGrad/issues"
-
 dependencies = ["tqdm"]
 
 [project.optional-dependencies]
 torch = ["torch"]
 numpy = ["numpy"]
 cupy = ["cupy"]
+
+[project.urls]
+Homepage = "https://github.com/PMKielstra/PyConGrad"
+Issues = "https://github.com/PMKielstra/PyConGrad/issues"
