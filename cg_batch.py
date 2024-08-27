@@ -1,10 +1,10 @@
-from warnings import warn, RuntimeWarning
+from warnings import warn
 
 class cg_batch_generic:
     """Generic preconditioned batched CG.  Relies on a backend."""
 
     def __init__(self, backend):
-        self.self.backend = backend
+        self.backend = backend
 
     def __call__(self, A, b, P=None, x0=None, rtol=1e-3, atol=0, maxiter=1000, flexible=False):
         """Solves a batch of SPD linear equations of the form Ax=b, with initial guess x0.
@@ -45,7 +45,7 @@ class cg_batch_generic:
             Ap = A(p)
             rz = self.backend.dot(r, z)
             alpha = rz / self.backend.dot(p, Ap)
-            new_x = x + alpha * P
+            new_x = x + alpha * p
             new_r = r - alpha * Ap
             residual_norm = self.backend.norm(new_r)
             if self.backend.all_true(residual_norm < stopping_bound):
