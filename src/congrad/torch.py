@@ -23,6 +23,7 @@ try:
             return torch.max(residual).item()
         
     cg_batch = cg_batch_generic(TorchBackend)
+    
 except ImportError:
     cg_batch = None
     from .backend_import_warn import backend_import_warn
