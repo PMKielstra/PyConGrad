@@ -6,10 +6,12 @@ try:
     
     class TorchBackend(Backend):
         def norm(X):
-            return torch.linalg.vector_norm(X, dim=-1)
+            return torch.linalg.vector_norm(X, dim=-2)
         
         def dot(X, Y):
-            return torch.matmul(X.unsqueeze(-2), Y.unsqueeze(-1)).squeeze(-1)
+            return torch.matmul(X.transpose(-1, -2).unsqueeze(-2),
+                                Y.transpose(-1, -2).unsqueeze(-1)) \
+            .squeeze(-1).transpose(-1, -2)
     
         def all_true(X):
             return X.all()

@@ -5,13 +5,13 @@ def make_backend(np):
     """Make a backend class for either NumPy or CuPy."""
     class NumPyCuPyBackend(Backend):
         def norm(X):
-            return np.linalg.norm(X, axis=-1)
+            return np.linalg.norm(X, axis=-2)
         
         def dot(X, Y):
-            XX = np.expand_dims(X, -2)
-            YY = np.expand_dims(Y, -1)
+            XX = np.expand_dims(np.swapaxes(X, -1, -2), -2)
+            YY = np.expand_dims(np.swapaxes(Y, -1, -2), -1)
             dot_prod = np.matmul(XX, YY)
-            return np.squeeze(dot_prod, axis=-1)
+            return np.swapaxes(np.squeeze(dot_prod, axis=-1), -1, -2)
                 
         def all_true(X):
             return X.all()
