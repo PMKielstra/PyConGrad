@@ -6,7 +6,7 @@ try:
     
     class TorchBackend(Backend):
         def norm(X):
-            return torch.linalg.vector_norm(X, dim=-2)
+            return torch.linalg.vector_norm(X, dim=-2, keepdim=True)
         
         def dot(X, Y):
             return torch.matmul(X.transpose(-1, -2).unsqueeze(-2),

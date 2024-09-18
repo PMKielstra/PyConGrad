@@ -28,6 +28,12 @@ class Backend(ABC):
         pass
 
     @staticmethod
+    def zero_where(X, inds):
+        """Zero out X[inds], where inds is a boolean array of the same shape as X.  May be destructive.  Override if indexing with boolean arrays doesn't work in your backend."""
+        X[inds] = 0
+        return X
+
+    @staticmethod
     def presentable_norm(residual):
         """Make the residual norm "presentable" for a monitor."""
         return residual

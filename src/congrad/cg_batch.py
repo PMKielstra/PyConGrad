@@ -61,6 +61,8 @@ class cg_batch_generic:
         
         x = x0
         r = b - A(x)
+        residual_norm = self.backend.norm(r)
+        converged_per_vector = (residual_norm < stopping_bound)
         z = P(r)
         p = z
         iter_count = 1 # iter_count should count the number of calls to A
@@ -74,10 +76,12 @@ class cg_batch_generic:
             Ap = A(p)
             rz = self.backend.dot(r, z)
             alpha = rz / self.backend.dot(p, Ap)
+            alpha = self.backend.zero_where(alpha, converged_per_vector)
             new_x = x + alpha * p
             new_r = r - alpha * Ap
             residual_norm = self.backend.norm(new_r)
-            if self.backend.all_true(residual_norm < stopping_bound):
+            converged_per_vector = (residual_norm < stopping_bound)
+            if self.backend.all_true(converged_per_vector):
                 converged = True
                 break
             new_z = P(new_r)
@@ -107,4 +111,4 @@ class cg_batch_generic:
             "residual": residual_norm
         }
 
-        return x, info
+        return new_x, info

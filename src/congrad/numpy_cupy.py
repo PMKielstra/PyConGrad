@@ -5,7 +5,7 @@ def make_backend(np):
     """Make a backend class for either NumPy or CuPy."""
     class NumPyCuPyBackend(Backend):
         def norm(X):
-            return np.linalg.norm(X, axis=-2)
+            return np.linalg.norm(X, axis=-2, keepdims=True)
         
         def dot(X, Y):
             XX = np.expand_dims(np.swapaxes(X, -1, -2), -2)
