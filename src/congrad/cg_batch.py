@@ -90,6 +90,8 @@ class cg_batch_generic:
             else:
                 beta_numerator = self.backend.dot(new_r, new_z)
             beta = beta_numerator / rz
+            beta = self.backend.zero_where(beta, converged_per_vector) # If we get very lucky, the residual might just be zero, leading to beta being NaN.
+                                                                       # Luckily, we don't care about values of p or z for converged solves, so we just zero that out.
             new_p = new_z + beta * p
 
             x, r, z, p = new_x, new_r, new_z, new_p
